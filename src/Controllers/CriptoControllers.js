@@ -49,4 +49,47 @@ CriptoControllers.addCoins = async (req,res) => {
         }
     }
 }
+
+CriptoControllers.mycoins = async (req,res) => {
+    const rev = req.body
+    coinUser = []
+    const dataUser = req.user[0];
+    const coinsFav = await pool.query('SELECT * FROM profile WHERE user = ?', dataUser.id_user)
+    if(coinsFav.length > 0){
+        for(i in coinsFav){
+            coinUser.push(coinsFav[i].cripto)
+        }
+    }else{
+        res.json({'ERROR':'No tiene criptomonedas agregadas.'})
+    }
+    dataCoinUser = []
+    for(i in coinUser){
+        let coinValueUser = dataUser.coin
+        data = {}
+        const dataCoin =  await CoinGeckoClient.coins.fetch(coinUser[i] , {
+            tickers: false,
+            community_data: false,
+            developer_data: false,
+            localization: false,
+            sparkline: false,
+            market_data: true,
+
+        });
+        
+        data.id = dataCoin.data.id,
+        data.symbol = dataCoin.data.symbol,
+        data.image = dataCoin.data.image.small,
+        data.priceUSD = dataCoin.data.market_data.current_price.usd,
+        data.priceEUR = dataCoin.data.market_data.current_price.eur,
+        data.priceUSER = dataCoin.data.market_data.current_price[coinValueUser]
+        data.last_updated = dataCoin.data.market_data.last_updated
+        dataCoinUser.push(data)
+    }
+    if(rev == false){
+        dataCoinUser.sort(((a, b) => b.priceUSER - a.priceUSER));
+    }else{
+        dataCoinUser.sort(((a, b) => a.priceUSER - b.priceUSER ));
+    }
+    res.json(dataCoinUser)
+}
 module.exports=CriptoControllers
