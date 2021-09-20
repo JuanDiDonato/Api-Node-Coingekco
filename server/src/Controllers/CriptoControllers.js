@@ -10,8 +10,9 @@ const CriptoControllers = {}
 
 
 CriptoControllers.coins = async (req, res) =>{
+    const {page} = req.body
     const dataUser = req.user;
-    const coins = await CoinGeckoClient.coins.markets({vs_currency : dataUser.coin});
+    const coins = await CoinGeckoClient.coins.markets({vs_currency : dataUser.coin, page, per_page : 250});
     const data = coins.data
     cripto_list = []
     for(i in data){
@@ -23,35 +24,35 @@ CriptoControllers.coins = async (req, res) =>{
         cripto.last_updated = data[i].last_updated
         cripto_list.push(cripto)
     }
-    res.json(cripto_list)
+    res.json({'messages': {'coins': cripto_list, 'error': false}})
 }
 
 CriptoControllers.addCoins = async (req,res) => {
     const {coinFav} = req.body
+    console.log(req.body);
     const dataUser = req.user[0]
     if(coinFav == null || coinFav == ''){
-        res.json({'ERROR':'This cripto not found'})
+        res.json({'messages': {'message': 'Moneda no valida', 'error': true}})
     }else{
         const cripto = await pool.query('SELECT * FROM criptos WHERE id_cripto = ?', coinFav)
         if(cripto.length == 0){
             await pool.query('INSERT INTO criptos SET ?', {'id_cripto' : coinFav})
             await pool.query('INSERT INTO profile SET ?', {'cripto':coinFav, 'user': dataUser.id_user})
-            res.json({'EXITO':'Criptomoneda añadida correctamente.'})
+            res.json({'messages': {'message': 'Moneda agregada correctamente', 'error': false}})
             
         }else{
             const criptoInProfile = await pool.query('SELECT * FROM profile WHERE user = ? AND cripto = ?', [dataUser.id_user, coinFav])
             if(criptoInProfile.length != 0){
-                res.json({'ERROR':'Esta criptomoneda ya esta en favoritos.'})
+                res.json({'messages': {'message': 'Esta moneda ya esta en favoritos', 'error': true}})
             }else{
                 await pool.query('INSERT INTO profile SET ?', {'cripto':coinFav,'user' : dataUser.id_user})
-                res.json({'EXITO':'Criptomoneda añadida correctamente.'})
+                res.json({'messages': {'message': 'Moneda agregada correctamente', 'error': false}})
             }
         }
     }
 }
 
 CriptoControllers.mycoins = async (req,res) => {
-    const rev = req.body
     coinUser = []
     const dataUser = req.user[0];
     const coinsFav = await pool.query('SELECT * FROM profile WHERE user = ?', dataUser.id_user)
@@ -60,7 +61,7 @@ CriptoControllers.mycoins = async (req,res) => {
             coinUser.push(coinsFav[i].cripto)
         }
     }else{
-        res.json({'ERROR':'No tiene criptomonedas agregadas.'})
+        res.json({'messages': {'message': 'No tiene monedas agregadas', 'error': true}})
     }
     dataCoinUser = []
     for(i in coinUser){
@@ -73,7 +74,6 @@ CriptoControllers.mycoins = async (req,res) => {
             localization: false,
             sparkline: false,
             market_data: true,
-
         });
         
         data.id = dataCoin.data.id,
@@ -82,14 +82,44 @@ CriptoControllers.mycoins = async (req,res) => {
         data.priceUSD = dataCoin.data.market_data.current_price.usd,
         data.priceEUR = dataCoin.data.market_data.current_price.eur,
         data.priceUSER = dataCoin.data.market_data.current_price[coinValueUser]
+        data.priceCHANGE = dataCoin.data.market_data.price_change_24h_in_currency[coinValueUser]
         data.last_updated = dataCoin.data.market_data.last_updated
         dataCoinUser.push(data)
     }
-    if(rev == false){
-        dataCoinUser.sort(((a, b) => b.priceUSER - a.priceUSER));
+    // if(rev == false){
+    //     dataCoinUser.sort(((a, b) => b.priceUSER - a.priceUSER));
+    // }else{
+    //     dataCoinUser.sort(((a, b) => a.priceUSER - b.priceUSER ));
+    // }
+    res.json({'messages': {'coins': dataCoinUser, 'error': false}})
+}
+
+CriptoControllers.mycoin = async (req,res) => {
+    const {coin} = req.body
+    const dataCoin =  await CoinGeckoClient.coins.fetch(coin , {
+        tickers: false,
+        community_data: false,
+        developer_data: false,
+        localization: false,
+        sparkline: false,
+        market_data: true,
+        });
+
+    res.json(dataCoin)
+}
+
+
+
+CriptoControllers.deleteCoin = async (req,res) => {
+    const {coin} = req.body
+    const dataUser = req.user[0];
+    const coinsFav = await pool.query('SELECT * FROM profile WHERE user = ?', dataUser.id_user)
+    if(coinsFav.length > 0){
+        await pool.query('DELETE FROM profile WHERE user = ? AND cripto = ?', [dataUser.id_user, coin])
+        res.json({'messages': {'message': 'Moneda removida exitosamente', 'error': false}})
     }else{
-        dataCoinUser.sort(((a, b) => a.priceUSER - b.priceUSER ));
+        res.json({'messages': {'message': 'No posee monedas agregadas a favoritos', 'error': true}})
     }
-    res.json(dataCoinUser)
+
 }
 module.exports=CriptoControllers
