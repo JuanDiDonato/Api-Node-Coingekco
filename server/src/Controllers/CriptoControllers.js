@@ -96,7 +96,7 @@ CriptoControllers.mycoins = async (req,res) => {
 
 CriptoControllers.mycoin = async (req,res) => {
     const {coin} = req.body
-    const dataCoin =  await CoinGeckoClient.coins.fetch(coin , {
+    const dataCoin =  await CoinGeckoClient.coins.fetch(coin, {
         tickers: false,
         community_data: false,
         developer_data: false,

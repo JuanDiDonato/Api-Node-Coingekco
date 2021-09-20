@@ -10,24 +10,25 @@ export default function Favoritos() {
 
     const [rev, setRev] = useState(false)
     const [mycoins, setMycoins] = useState([])
-    const [usercoin, setUsercoin] = useState()
+    //const [usercoin, setUsercoin] = useState()
 
 
     useEffect(() => {
         const MyCoins = async () => {
             const { data } = await axios.get('/favcoins', { validateStatus: false })
             if (data.messages.error === false) {
+                console.log(data);
                 setMycoins(data.messages.coins)
             }
         }
-        const User = async () => {
-            const {data} = await axios.get('/data', {validateStatus:false})
-            setUsercoin(data.coin)
-        }
+        // const User = async () => {
+        //     const {data} = await axios.get('/data', {validateStatus:false})
+        //     setUsercoin(data.coin)
+        // }
         MyCoins()
-        User()
+        //User()
         //eslint-disable-next-line
-    }, [mycoins])
+    }, [])
 
 
     const coinsOrden = (value) => {
@@ -43,16 +44,18 @@ export default function Favoritos() {
     }
 
     const deleteCoin = async (coin) => {
-        const {data} = await axios.post('/delete', {'coin' : coin.id}, {validateStatus:false})
-        if(data.messages.error === true){
-            alert(data.messages.message)
+        const res = await axios.post('/delete', {'coin' : coin.id}, {validateStatus:false})
+        if(res.data.messages.error === true){
+            alert(res.data.messages.message)
         }else{
-            alert(data.messages.message)
-            const MyCoinsList = mycoins.splice(mycoins.indexOf(coin),1);
-            if(mycoins.length === 0){
+            alert(res.data.messages.message)
+            if(mycoins.length === 1){
                 setMycoins([])
             }else{
-                setMycoins(MyCoinsList)
+                const { data } = await axios.get('/favcoins', { validateStatus: false })
+                if (data.messages.error === false) {
+                    setMycoins(data.messages.coins)
+                }
             }
             
         }
@@ -89,8 +92,8 @@ export default function Favoritos() {
                                 <th scope="col">Simbolo</th>
                                 <th scope="col">Precio usd</th>
                                 <th scope="col">Precio eur</th>
-                                <th scope="col">{'Precio '+ usercoin}</th>
-                                <th scope="col">{'Variacion 24hs en '+ usercoin}</th>
+                                {/* <th scope="col">{'Precio '+ usercoin}</th>
+                                <th scope="col">{'Variacion 24hs en '+ usercoin}</th> */}
                                 <th scope="col">Ultima actualizacion</th>
                                 <th scope="col">Logo</th>
                                 <th scope="col">Borrar</th>
