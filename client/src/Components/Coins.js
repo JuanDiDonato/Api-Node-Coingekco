@@ -9,7 +9,7 @@ export default function Coins() {
     const [data, setData] = useState([])
     const [pag, setPage] = useState(1)
     const [results, setResults] = useState([])
-    const [search, setSeacrh] = useState()
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
         const GetCoins = async () => {
@@ -54,9 +54,6 @@ export default function Coins() {
                 <h4><Link to='/mycoins'>Criptomonedas favoritas</Link></h4>            
             </div>
             <div>
-                <input type="text" placeholder="Busca una moneda!" id="buscador" onChange={(e) => {setSeacrh(e.target.value); buscador(data,search)}}/>
-            </div>
-            <div>
                 <div>
                     <br />
                     <button type="submit" id="next" onClick={nextpage}>siguiente</button>
@@ -78,7 +75,8 @@ export default function Coins() {
                 <h4><Link to='/mycoins'>Criptomonedas favoritas</Link></h4>            
             </div>
             <div>
-                <input type="text" placeholder="Busca una moneda!" id="buscador" onChange={e => {setSeacrh(e.target.value); buscador(data,search)}}/>
+                <input type="text" placeholder="Busca una moneda!" id="buscador" onChange={e => {setSearch(e.target.value); buscador(data,search)}}/>
+                                                                        
             </div>
             <div>
                 <div>
