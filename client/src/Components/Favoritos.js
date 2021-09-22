@@ -11,7 +11,6 @@ export default function Favoritos() {
 
     const [rev, setRev] = useState(false)
     const [mycoins, setMycoins] = useState([])
-    const [coinsHis, setCoinsHis] = useState([])
     //const [usercoin, setUsercoin] = useState()
 
 
@@ -21,15 +20,6 @@ export default function Favoritos() {
             if (data.messages.error === false) {
                 setMycoins(data.messages.coins)
             }  
-            const data2 = await axios.post('/favhistoryall', {'crypto':data.messages.coins},  { validateStatus: false })
-            let array = data2.data
-            let array2 = []
-            array.forEach(element => {
-                array2.push(element.price.data.prices)
-                if(array2.length === array.length){
-                    setCoinsHis(array2)}
-
-            });
         }
         // const User = async () => {
         //     const {data} = await axios.get('/data', {validateStatus:false})
@@ -71,8 +61,6 @@ export default function Favoritos() {
         }
     }
 
-    let coins = coinsHis.map(crypt => crypt.map(cry => cry))
-    let dataLength = coinsHis.map(crypt => moment(crypt[0]).fromNow()) 
     let CoinNames = mycoins.map(names => names.id)
     let CoinValue = mycoins.map(names => names.priceUSER)
     const data = {
