@@ -108,6 +108,29 @@ CriptoControllers.mycoin = async (req,res) => {
     res.json(dataCoin)
 }
 
+CriptoControllers.history = async (req,res) => {
+    const {crypto} = req.body
+    const dataCoin =  await  await CoinGeckoClient.coins.fetchMarketChart(crypto)
+    res.json(dataCoin)
+}
+
+CriptoControllers.historyAll = async (req,res) => {
+    const {crypto} = req.body
+    let idsCryptos = []
+    for(i in crypto){
+        idsCryptos.push(crypto[i].id) 
+    }
+    let infoCryptos = []
+    for(i in idsCryptos){
+        const dataCoin =  await  await CoinGeckoClient.coins.fetchMarketChart(idsCryptos[i])
+        info = {}
+        info.price = dataCoin
+        infoCryptos.push(info)
+    } 
+
+    res.json(infoCryptos)
+}
+
 
 
 CriptoControllers.deleteCoin = async (req,res) => {

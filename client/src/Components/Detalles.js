@@ -1,25 +1,58 @@
 import React, { useEffect, useState} from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { Line } from 'react-chartjs-2';
+import moment from 'moment'
+import 'moment/locale/es'
+
 
 export default function Detalles(props) {
     const {match: {params}} = props
     const id = params.id
     const [crypto, setCrypto] = useState([])
+    const [cryptoHis, setCryptoHis] = useState([])
 
     useEffect(() => {
         const GetCoin = async () => {
             const {data:{data}} = await axios.post('/favcoin', {'coin':id}, { validateStatus: false })
             setCrypto(data)
-            console.log(data);
+        }
+        const GetHis = async () => {
+            const {data: {data:{prices}}} = await axios.post('/favhistory', {'crypto':id},  { validateStatus: false })
+            setCryptoHis(prices)
         }
         GetCoin()
+        GetHis()
         //eslint-disable-next-line
-    }, [])
+    }, []);
+
+    let coins = cryptoHis.map(crypt => crypt)
+    let dataLength = cryptoHis.map(crypt => moment(crypt[0]).fromNow())
 
     if(crypto.length === 0){
         return(<h1>Cargando datos...</h1>)
-    }else{
+    }else{    
+        const data = {
+            labels: dataLength,
+            datasets: [
+              {
+                label: 'Cripto Change',
+                data: coins,
+                fill: false,
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgba(255, 99, 132, 0.2)',
+              },
+            ],
+          };
+          
+          const LineChart = () => (
+            <>
+              <div className='header'>
+                <h1 className='title'>Price Change</h1>
+              </div>
+              <Line data={data} o />
+            </>
+          );
         return (
             <div>
                 <div>
@@ -46,6 +79,9 @@ export default function Detalles(props) {
                     <li>Cambio en 200 dias: {crypto.market_data.price_change_percentage_200d_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_200d_in_currency.usd}</p>:<li style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_200d_in_currency.usd}</li>}</li>
                     <li>Cambio en 1 año: {crypto.market_data.price_change_percentage_1y_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_1y_in_currency.usd}</p>:<li style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_1y_in_currency.usd}</li>}</li>
 
+                </div>
+                <div>
+                   <div style={{width: '80%'}}>{LineChart()}</div>
                 </div>
                 <div>
                     <h2>Descripcion</h2>

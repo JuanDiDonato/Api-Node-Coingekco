@@ -1,6 +1,6 @@
 const {Router} = require('express')
 const criptoRoutes = Router()
-const {coins, addCoins, mycoins, mycoin ,deleteCoin} = require('../Controllers/CriptoControllers')
+const {coins, addCoins, mycoins, mycoin ,history, historyAll,deleteCoin} = require('../Controllers/CriptoControllers')
 const passport = require('passport')
 require('../passport')
 
@@ -16,6 +16,12 @@ criptoRoutes.get('/favcoins', passport.authenticate('jwt',{session:false}), myco
 
 //Obtener una criptomoneda del usuario
 criptoRoutes.post('/favcoin', passport.authenticate('jwt',{session:false}), mycoin)
+
+//Obtener historial de una criptomoneda del usuario
+criptoRoutes.post('/favhistory', passport.authenticate('jwt',{session:false}), history)
+
+//Obtener historial de una criptomoneda del usuario
+criptoRoutes.post('/favhistoryall', passport.authenticate('jwt',{session:false}), historyAll)
 
 //Borrar una criptomoneda del usuario
 criptoRoutes.post('/delete', passport.authenticate('jwt',{session:false}), deleteCoin)
