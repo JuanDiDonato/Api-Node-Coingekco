@@ -40,7 +40,12 @@ export default function Detalles(props) {
     }else{    
 
         const ContarDias = (dias) => {
-            setDias(dias)
+            if(dias === '' || dias === null){
+                setDias(1)
+            }else{
+                setDias(dias)
+            }
+            
         }
 
         const data = {

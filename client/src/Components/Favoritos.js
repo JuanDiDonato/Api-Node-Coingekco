@@ -169,7 +169,7 @@ export default function Favoritos() {
                                                     {coin.priceCHANGE >= 0 ? <th scope="row" style={{color: 'green'}}>{coin.priceCHANGE}</th> : <th scope="row" style={{color: 'red'}}>{coin.priceCHANGE}</th> }
                                                     <th scope="row">{moment(coin.last_updated).fromNow()}</th>
                                                     <th scope="row"><div><img src={coin.image} alt={coin.id} /></div></th>
-                                                    <th scope="row"><div style={{cursor:'pointer'}} onClick={() => deleteCoin(coin)}><a><i className="fa fa-trash-o m-1"></i></a></div></th>
+                                                    <th scope="row"><div style={{cursor:'pointer'}} onClick={() => deleteCoin(coin)}><i className="fa fa-trash-o m-1" style={{cursor:'pointer'}}></i></div></th>
                                                     <th scope="row"><div style={{cursor:'pointer'}}><Link to={'/mycoin/'+coin.id}><i className="fa fa-plus m-1"></i></Link></div></th>
                                                 </tr>
                                             )
