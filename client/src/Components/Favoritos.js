@@ -89,12 +89,11 @@ export default function Favoritos() {
           },
         ],
       };
-      
+
       const VerticalBar = () => (
         <>
           <div className='header'>
-            <h1 className='title'>Precio</h1>
-   
+            <h5 className='title'>Precio de tus monedas</h5>
           </div>
           <Bar data={data} />
         </>
@@ -103,40 +102,37 @@ export default function Favoritos() {
 
     if(mycoins.length === 0){
         return(
-                <div>
-                    <h1>Favoritos</h1>
+                <div className="container mt-5">
                     <h2>Aca se muestran las monedas que agregaste a favoritos</h2>
-                    <h3>Para volver al inicio pulse <Link to="/coins">aqui</Link></h3>
-                    <h3>Estamos obteniendo los datos de sus monedas. Si no carga ningun dato, puede que no tenga ninguna moneda agregada.
+                    <h4>Estamos obteniendo los datos de sus monedas. Si no carga ningun dato, puede que no tenga ninguna moneda agregada.
                         Si ya tiene monedas en favoritos, por favor espere.
-                    </h3>
+                    </h4>
                 </div>
             )
     }else{
         return (
-            <div>
-                <div>
-                    <h1>Favoritos</h1>
-                    <h2>Aca se muestran las monedas que agregaste a favoritos</h2>
-                    <h3>Para volver al inicio pulse <Link to="/coins">aqui</Link></h3>
+            <div className="container col-md-10">
+                <div className="mt-5">
+                    <h3>Aca se muestran las monedas que agregaste a favoritos</h3>
                 </div>
-                <div style={{width: '70%'}}>{VerticalBar()}</div>
-                <div>
-                    <input type="checkbox" name="orden" id="orden" onClick={() => coinsOrden(false)} />Descendente
+                <div className="mx-auto col-md-6 mt-4 border p-3 m-3">{VerticalBar()}</div>
+                <div className="p-3">
+                    <input type="radio" className="m-1" name="orden" id="orden" onClick={() => coinsOrden(false)} />Descendente
                 </div>
-                <div>
-                    <table>
-                        <thead>
+                <div className="col-md-12">
+                    <table className="table">
+                        <thead className="thead-dark">
                             <tr>
                                 <th scope="col">Criptomoneda</th>
                                 <th scope="col">Simbolo</th>
                                 <th scope="col">Precio usd</th>
                                 <th scope="col">Precio eur</th>
-                                {/* <th scope="col">{'Precio '+ usercoin}</th>
-                                <th scope="col">{'Variacion 24hs en '+ usercoin}</th> */}
+                                {/* <th scope="col">{'Precio '+ usercoin}</th>*/}
+                                <th scope="col">Variacion 24hs</th> 
                                 <th scope="col">Ultima actualizacion</th>
                                 <th scope="col">Logo</th>
                                 <th scope="col">Borrar</th>
+                                <th scope="col">Info</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,7 +144,6 @@ export default function Favoritos() {
                                             <th scope="row">{coin.symbol}</th>
                                             <th scope="row">{coin.priceUSD}</th>
                                             <th scope="row">{coin.priceEUR}</th>
-                                            <th scope="row">{coin.priceUSER}</th>
                                             {coin.priceCHANGE >= 0 ? <th scope="row" style={{color: 'green'}}>{coin.priceCHANGE}</th> : <th scope="row" style={{color: 'red'}}>{coin.priceCHANGE}</th> }
                                             <th scope="row">{moment(coin.last_updated).fromNow()}</th>
                                             <th scope="row"><div><img src={coin.image} alt={coin.id} /></div></th>

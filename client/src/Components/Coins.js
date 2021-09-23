@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Link} from 'react-router-dom'
+import coingecko from '../assets/img/coingecko.png'
 import axios from 'axios'
 import moment from 'moment'
 import 'moment/locale/es'
@@ -47,74 +47,72 @@ export default function Coins() {
 
     if(data.length === 0){
         return(
-            <div>
-            <div>
-                <h1>Criptomonedas disponibles</h1>
-                <h5>Coortesia de CoinGekco</h5>
-                <h4><Link to='/mycoins'>Criptomonedas favoritas</Link></h4>            
-            </div>
-            <div>
-                <div>
-                    <br />
-                    <button type="submit" id="next" onClick={nextpage}>siguiente</button>
-                    <button type="submit" id="next" onClick={backpage}>anterior</button>
-                    <button disabled="disabled">{pag}</button>
+            <div className="mt-5 container col-md-10 mx-auto">
+                <div className="mb-4">
+                    <h1>Criptomonedas disponibles</h1>
+                    <img src={coingecko} alt="coingecko" />
+                    <h5>Coortesia de CoinGekco</h5>            
                 </div>
                 <div>
-                    <h3>Obteniendo monedas...</h3>
+                    <div >
+                        <button type="submit" id="next" className="btn btn-dark m-1" onClick={nextpage}>Siguiente</button>
+                        <button type="submit" id="next" className="btn btn-primary m-1" onClick={backpage}>Anterior</button>
+                        <button disabled="disabled" className="btn btn-outline-primary m-1">{pag}</button>
+                    </div>
+                    <div>
+                        <h3>Obteniendo monedas...</h3>
+                    </div>
                 </div>
-            </div>
             </div>
         )
     }
     return (
-        <div>
-            <div>
-                <h1>Criptomonedas disponibles</h1>
-                <h5>Coortesia de CoinGekco</h5>
-                <h4><Link to='/mycoins'>Criptomonedas favoritas</Link></h4>            
-            </div>
-            <div>
-                <input type="text" placeholder="Busca una moneda!" id="buscador" onChange={e => {setSearch(e.target.value); buscador(data,search)}}/>
-                                                                        
-            </div>
-            <div>
+        <div className="container col-md-10 mx-auto mt-5">
+                    <div className="mb-4">
+                        <h1>Criptomonedas disponibles</h1>
+                        <img src={coingecko} alt="coingecko" className="p-1" />
+                        <h5>Coortesia de CoinGekco</h5>
+                    </div>
+                    <div className="form-group">
+                        <input type="text" className="form-control mb-1" placeholder="Busca una moneda!" id="buscador" onChange={e => {setSearch(e.target.value); buscador(data,search)}}/>                                                   
+                    </div>
                 <div>
-                    <br />
-                    <button type="submit" id="next" onClick={nextpage}>siguiente</button>
-                    <button type="submit" id="next" onClick={backpage}>anterior</button>
-                    <button disabled="disabled">{pag}</button>
-                </div>
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Criptomoneda</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Ultima actualizacion</th>
-                                <th scope="col">Logo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-        
-                        {
-                            
-                            results.map(result => {
-                                return(
-                                <tr key={result.id}>
-                                    <th scope="row" id={result.id} style={{cursor:'pointer'}} onClick={() => favoritos(result.id)}>{result.id}</th>
-                                    <th scope="row">{'$'+result.current_price}</th>
-                                    <th scope="row">{moment(result.last_updated).fromNow()}</th>
-                                    <th scope="row"><div><img src={result.image} alt={result.id} style={{width: '15%'}}/></div></th>  
+                    <div>
+                        <button className="btn btn-info m-1" type="submit" id="next" onClick={nextpage}>Siguiente</button>
+                        <button  className="btn btn-info m-1" type="submit" id="next" onClick={backpage}>Anterior</button>
+                        <button disabled="disabled" className="btn btn-outline-info m-1" >{pag}</button>
+                    </div>
+                    <div className="mt-3 col-md-12 mx-auto">
+                        <table className="table text-center">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">Criptomoneda</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Ultima actualizacion</th>
+                                    <th scope="col">Logo</th>
                                 </tr>
-                                )})
-                        }
+                            </thead>
+                            <tbody>
+            
+                            {
+                                
+                                results.map(result => {
+                                    return(
+                                    <tr key={result.id}>
+                                        <th scope="row" id={result.id} style={{cursor:'pointer'}} onClick={() => favoritos(result.id)}>{result.id}</th>
+                                        <th scope="row">{'$'+result.current_price}</th>
+                                        <th scope="row" >{moment(result.last_updated).fromNow()}</th>
+                                        <th scope="row"><div className="img-fluid"><img src={result.image} alt={result.id} style={{width:'50px'}}/></div></th>  
+                                    </tr>
+                                    )})
+                            }
 
-                        </tbody>
-                        
-                    </table>
+                            </tbody>
+                            
+                        </table>
+                    </div>
                 </div>
-            </div>
+            
         </div>
     )
 }

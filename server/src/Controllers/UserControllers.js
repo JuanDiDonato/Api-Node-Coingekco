@@ -8,7 +8,7 @@ NewUserControllers.newToken = (id_user,coin) =>{
     return jwt.sign({
         iss: 'qu13r3s_l3ch3',
         sub: {id_user, coin}
-    }, 'qu13r3s_l3ch3', {expiresIn: '1h'})
+    }, 'qu13r3s_l3ch3', {expiresIn: '10h'})
 }
 
 NewUserControllers.register = async (req,res) => {

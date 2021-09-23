@@ -98,8 +98,8 @@ CriptoControllers.mycoin = async (req,res) => {
     const {coin} = req.body
     const dataCoin =  await CoinGeckoClient.coins.fetch(coin, {
         tickers: false,
-        community_data: false,
-        developer_data: false,
+        community_data: true,
+        developer_data: true,
         localization: false,
         sparkline: false,
         market_data: true,
@@ -109,8 +109,8 @@ CriptoControllers.mycoin = async (req,res) => {
 }
 
 CriptoControllers.history = async (req,res) => {
-    const {crypto} = req.body
-    const dataCoin =  await  await CoinGeckoClient.coins.fetchMarketChart(crypto)
+    const {crypto, days} = req.body
+    const dataCoin =  await CoinGeckoClient.coins.fetchMarketChart(crypto, {days: days})
     res.json(dataCoin)
 }
 

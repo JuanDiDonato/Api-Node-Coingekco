@@ -1,0 +1,27 @@
+body{
+    display: grid;
+    grid-template-columns: auto;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.detalles{
+    display: grid !important;
+    grid-template-columns: 30% 70% !important;
+    font-family: 'Roboto', sans-serif;
+}
+
+.text{
+    font-size: 100%;
+}
+
+@media(max-width:1024px){
+    .detalles{
+        grid-template-columns: 100% !important;
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+    }
+}
+
+
+
