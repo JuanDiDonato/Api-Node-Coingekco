@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Bar } from 'react-chartjs-2';
 import axios from 'axios'
 import moment from 'moment'
 import 'moment/locale/es'
+import { AuthContext } from '../context/AuthContext';
+
 
 
 
 export default function Favoritos() {
 
+    const {user} = useContext(AuthContext);
     const [log, setLog]= useState(false)
     const [message, setMessage] = useState()
     const [rev, setRev] = useState(false)
     const [mycoins, setMycoins] = useState([])
     //const [usercoin, setUsercoin] = useState()
-
 
     useEffect(() => {
         const MyCoins = async () => {
@@ -149,7 +151,7 @@ export default function Favoritos() {
                                         <th scope="col">Simbolo</th>
                                         <th scope="col"><i className="fa fa-usd mr-1"></i>USD</th>
                                         <th scope="col"><i className="fa fa-eur mr-1"></i>EUR</th>
-                                        {/* <th scope="col">{'Precio '+ usercoin}</th>*/}
+                                        <th scope="col">{'Precio '+ user.coin}</th>
                                         <th scope="col"><i className="fa fa-clock-o mr-1"></i>Variacion 24hs</th> 
                                         <th scope="col"><i className="fa fa-clock-o mr-1"></i>Ultima actualizacion</th>
                                         <th scope="col">Logo</th>
@@ -166,6 +168,7 @@ export default function Favoritos() {
                                                     <th scope="row">{coin.symbol}</th>
                                                     <th scope="row">{coin.priceUSD}</th>
                                                     <th scope="row">{coin.priceEUR}</th>
+                                                    <th scope="row">{coin.priceUSER}</th>
                                                     {coin.priceCHANGE >= 0 ? <th scope="row" style={{color: 'green'}}>{coin.priceCHANGE}</th> : <th scope="row" style={{color: 'red'}}>{coin.priceCHANGE}</th> }
                                                     <th scope="row">{moment(coin.last_updated).fromNow()}</th>
                                                     <th scope="row"><div><img src={coin.image} alt={coin.id} /></div></th>

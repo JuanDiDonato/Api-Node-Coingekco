@@ -1,21 +1,35 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Link } from 'react-router-dom'
+import {AuthContext} from '../context/AuthContext'
+import axios from 'axios'
 
-export default function Nav() {
-    return (
+export default function Nav(props) {
+
+    const {user, isAuthenticated,setUser,setIsAuthenticated} = useContext(AuthContext)
+    const logout = async () => {
+        const {data} = await axios.get('/logout', {validateStatus:false})
+        setUser(data.user)
+        setIsAuthenticated(false)
+    }
+
+    return(
         <div>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">
-                    <Link className="nav-link active" to="/coins">CriptoMonedas<span className="sr-only">(current)</span></Link>
-                    <Link className="nav-link" to='/mycoins'><i className="fa fa-star m-1"></i>Favoritos</Link>
-                    <Link className="nav-link" to='/'><i className="fa fa-sign-out  m-1"></i>Salir</Link>
+            <nav>
+                { isAuthenticated ? 
+                    <div className="navegacion">
+                        <div><Link className="nav-link active" to="/coins">Cryptos</Link></div>
+                        <div><Link className="nav-link active" to="/mycoins">Mis monedas</Link></div>
+                        <div><Link className="nav-link active" to="/" onClick={logout}>Salir</Link></div>
+                        <div className="user">{user.username}</div>
                     </div>
-                </div>
+                : 
+                <div className="navegacion">
+                    <div><Link className="nav-link active" to="/register">Registrate!</Link></div>
+                </div> 
+                }
+
             </nav>
         </div>
     )
+
 }

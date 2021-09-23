@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { AuthContext } from '../context/AuthContext'
 
 
 export default function Home(props) {
 
+    const {setIsAuthenticated, setUser} = useContext(AuthContext)
     const [log, setLog] = useState(false)
 
     const login = async e => {
@@ -20,6 +22,8 @@ export default function Home(props) {
             }else{
                 if(data.messages.error === false){
                     setLog(true)   
+                    setIsAuthenticated(data.messages.isAuthenticated)
+                    setUser(data.messages.user)
                 }
             }
         }

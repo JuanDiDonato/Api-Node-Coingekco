@@ -3,11 +3,26 @@ body{
     grid-template-columns: auto;
     text-align: center;
     font-family: 'Roboto', sans-serif;
-    
-
-
 }
 
+.navegacion{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    background-color: rgb(34, 34, 34);
+    text-align: center;
+    padding: 1%;
+}
+
+.navegacion a:hover {
+    color: white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+
+.user{
+    color: white;
+    padding: 3%;
+}
 .fondo{
     display: grid;
     grid-template-columns: 100%;
