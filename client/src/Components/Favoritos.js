@@ -9,6 +9,8 @@ import 'moment/locale/es'
 
 export default function Favoritos() {
 
+    const [log, setLog]= useState(false)
+    const [message, setMessage] = useState()
     const [rev, setRev] = useState(false)
     const [mycoins, setMycoins] = useState([])
     //const [usercoin, setUsercoin] = useState()
@@ -30,6 +32,17 @@ export default function Favoritos() {
         //eslint-disable-next-line
     }, [])
 
+    const alerta = () =>{
+        setTimeout(() => {
+            setLog(false)
+        }, 2000);
+        return(
+            <div className="alert alert-dark col-md-4 mx-auto">
+                <h6>{message}</h6>
+            </div>
+        )
+    }
+
 
     const coinsOrden = (value) => {
         if(rev === false){
@@ -42,19 +55,21 @@ export default function Favoritos() {
             setMycoins(MyCoinsOrder)
         }
     }
-
     const deleteCoin = async (coin) => {
         const res = await axios.post('/delete', {'coin' : coin.id}, {validateStatus:false})
         if(res.data.messages.error === true){
-            alert(res.data.messages.message)
+            setLog(true)
+            setMessage(res.data.messages.message)
         }else{
-            alert(res.data.messages.message)
+            setLog(true)
+            setMessage(res.data.messages.message)
             if(mycoins.length === 1){
                 setMycoins([])
             }else{
                 const { data } = await axios.get('/favcoins', { validateStatus: false })
                 if (data.messages.error === false) {
                     setMycoins(data.messages.coins)
+    
                 }
             }
             
@@ -89,7 +104,6 @@ export default function Favoritos() {
           },
         ],
       };
-
       const VerticalBar = () => (
         <>
           <div className='header'>
@@ -99,64 +113,75 @@ export default function Favoritos() {
         </>
       );
       
-
     if(mycoins.length === 0){
         return(
-                <div className="container mt-5">
-                    <h2>Aca se muestran las monedas que agregaste a favoritos</h2>
-                    <h4>Estamos obteniendo los datos de sus monedas. Si no carga ningun dato, puede que no tenga ninguna moneda agregada.
-                        Si ya tiene monedas en favoritos, por favor espere.
-                    </h4>
-                </div>
+            <main>
+                <header className="fondo-NOcoins">
+                    <div className="container mt-5">
+                        <h2>Aca se muestran las monedas que agregaste a favoritos</h2>
+                        <h4>Estamos obteniendo los datos de sus monedas. Si no carga ningun dato, puede que no tenga ninguna moneda agregada.
+                            Si ya tiene monedas en favoritos, por favor espere.
+                        </h4>
+                        <i className=" fa fa-circle-o-notch fa-spin fa-4x"></i>
+                    </div>
+                </header>
+            </main>
+                
             )
     }else{
         return (
-            <div className="container col-md-10">
-                <div className="mt-5">
-                    <h3>Aca se muestran las monedas que agregaste a favoritos</h3>
-                </div>
-                <div className="mx-auto col-md-6 mt-4 border p-3 m-3">{VerticalBar()}</div>
-                <div className="p-3">
-                    <input type="radio" className="m-1" name="orden" id="orden" onClick={() => coinsOrden(false)} />Descendente
-                </div>
-                <div className="col-md-12">
-                    <table className="table">
-                        <thead className="thead-dark">
-                            <tr>
-                                <th scope="col">Criptomoneda</th>
-                                <th scope="col">Simbolo</th>
-                                <th scope="col">Precio usd</th>
-                                <th scope="col">Precio eur</th>
-                                {/* <th scope="col">{'Precio '+ usercoin}</th>*/}
-                                <th scope="col">Variacion 24hs</th> 
-                                <th scope="col">Ultima actualizacion</th>
-                                <th scope="col">Logo</th>
-                                <th scope="col">Borrar</th>
-                                <th scope="col">Info</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                mycoins.map(coin => {
-                                    return (
-                                        <tr key={coin.id}>
-                                            <th scope="row" >{coin.id}</th>
-                                            <th scope="row">{coin.symbol}</th>
-                                            <th scope="row">{coin.priceUSD}</th>
-                                            <th scope="row">{coin.priceEUR}</th>
-                                            {coin.priceCHANGE >= 0 ? <th scope="row" style={{color: 'green'}}>{coin.priceCHANGE}</th> : <th scope="row" style={{color: 'red'}}>{coin.priceCHANGE}</th> }
-                                            <th scope="row">{moment(coin.last_updated).fromNow()}</th>
-                                            <th scope="row"><div><img src={coin.image} alt={coin.id} /></div></th>
-                                            <th scope="row"><div style={{cursor:'pointer'}} onClick={() => deleteCoin(coin)}>Eliminar</div></th>
-                                            <th scope="row"><div style={{cursor:'pointer'}}><Link to={'/mycoin/'+coin.id}> Mas detalles</Link></div></th>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <main>
+                <header className="fondo-coins">
+                    <div className="container col-md-10">
+                        <div className="mt-5">
+                            <h3>Aca se muestran las monedas que agregaste a favoritos</h3>
+                        </div>
+                        <div className="mx-auto col-md-7 mt-4 p-3 m-3 bg-light text-light card">{VerticalBar()}</div>
+                        <div className="p-3">
+                            <input type="radio" className="m-1" name="orden" id="orden" onClick={() => coinsOrden(false)} />Descendente
+                        </div>
+                        <div>{log ? alerta() : null}</div>
+                        <div className="col-md-12">
+                            <table className="table">
+                                <thead className="thead-light">
+                                    <tr>
+                                        <th scope="col">Criptomoneda</th>
+                                        <th scope="col">Simbolo</th>
+                                        <th scope="col"><i className="fa fa-usd mr-1"></i>USD</th>
+                                        <th scope="col"><i className="fa fa-eur mr-1"></i>EUR</th>
+                                        {/* <th scope="col">{'Precio '+ usercoin}</th>*/}
+                                        <th scope="col"><i className="fa fa-clock-o mr-1"></i>Variacion 24hs</th> 
+                                        <th scope="col"><i className="fa fa-clock-o mr-1"></i>Ultima actualizacion</th>
+                                        <th scope="col">Logo</th>
+                                        <th scope="col"><i className="fa fa-minus-circle mr-1"></i>Borrar</th>
+                                        <th scope="col"><i className="fa fa-info-circle mr-1"></i>Info</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        mycoins.map(coin => {
+                                            return (
+                                                <tr key={coin.id} className="text-light">
+                                                    <th scope="row" >{coin.id}</th>
+                                                    <th scope="row">{coin.symbol}</th>
+                                                    <th scope="row">{coin.priceUSD}</th>
+                                                    <th scope="row">{coin.priceEUR}</th>
+                                                    {coin.priceCHANGE >= 0 ? <th scope="row" style={{color: 'green'}}>{coin.priceCHANGE}</th> : <th scope="row" style={{color: 'red'}}>{coin.priceCHANGE}</th> }
+                                                    <th scope="row">{moment(coin.last_updated).fromNow()}</th>
+                                                    <th scope="row"><div><img src={coin.image} alt={coin.id} /></div></th>
+                                                    <th scope="row"><div style={{cursor:'pointer'}} onClick={() => deleteCoin(coin)}><a><i className="fa fa-trash-o m-1"></i></a></div></th>
+                                                    <th scope="row"><div style={{cursor:'pointer'}}><Link to={'/mycoin/'+coin.id}><i className="fa fa-plus m-1"></i></Link></div></th>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </header>
+            </main>
+           
         )
         
     }

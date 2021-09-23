@@ -11,7 +11,8 @@ export default function Nav() {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                     <Link className="nav-link active" to="/coins">CriptoMonedas<span className="sr-only">(current)</span></Link>
-                    <Link className="nav-link" to='/mycoins'>Favoritos</Link>
+                    <Link className="nav-link" to='/mycoins'><i className="fa fa-star m-1"></i>Favoritos</Link>
+                    <Link className="nav-link" to='/'><i className="fa fa-sign-out  m-1"></i>Salir</Link>
                     </div>
                 </div>
             </nav>

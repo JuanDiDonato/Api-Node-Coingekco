@@ -25,23 +25,28 @@ export default function Register(props) {
 
 
     return (
-        <div className="container col-md-8 mt-5">
-            <div className="card">
-                <div className="card-header">
-                    <h1>Registrate, es gratis!</h1>
+        <main>
+            <header className="fondo">
+                <div className="container col-md-8 mt-5">
+                    <div className="card bg-light text-dark p-3">
+                        <div className="card-title">
+                            <h1>Registrate, es gratis!</h1>
+                        </div>
+                        <div className="form-group p-3" >
+                                <input type="text" placeholder="name" id="name" className="form-control mb-1"/>
+                                <input type="text" placeholder="surname" id="surname" className="form-control mb-1"/>
+                                <input type="text" placeholder="username" id="username" className="form-control mb-1"/>
+                                <input type="password" placeholder="password" id="password" className="form-control mb-1"/>
+                                <input type="text" placeholder="coin preference (ej: usd, eur, ars)" className="form-control mb-1" id="coin"/>
+                                <button type="submit" onClick={register} className="btn btn-primary btn-block">Registrarse</button>
+                        </div>
+                        <div>
+                            <h4>¿Ya tenes una cuenta?, inicia sesion <Link to='/'>aca</Link>!</h4>
+                        </div>
+                    </div>
                 </div>
-                <div className="form-group p-3" >
-                        <input type="text" placeholder="name" id="name" className="form-control mb-1"/>
-                        <input type="text" placeholder="surname" id="surname" className="form-control mb-1"/>
-                        <input type="text" placeholder="username" id="username" className="form-control mb-1"/>
-                        <input type="password" placeholder="password" id="password" className="form-control mb-1"/>
-                        <input type="text" placeholder="coin preference (ej: usd, eur, ars)" className="form-control mb-1" id="coin"/>
-                        <button type="submit" onClick={register} className="btn btn-primary btn-block">Registrarse</button>
-                </div>
-                <div>
-                    <h4>¿Ya tenes una cuenta?, inicia sesion <Link to='/'>aca</Link>!</h4>
-                </div>
-            </div>
-        </div>
+            </header>
+        </main>
+
     )
 }

@@ -114,7 +114,7 @@ export default function Detalles(props) {
                         </ul>
                     </div>
                     <div className="mt-3">
-                        <h3>Enlaces</h3>
+                        <h3><i className="fa fa-link m-1"></i>Enlaces</h3>
                          <ul className="list-group list-group-flush">
                             {links.blockchain_site.map(link=> {
                                 let NewString = link.substring(25, link)
