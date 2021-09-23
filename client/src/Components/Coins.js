@@ -53,8 +53,10 @@ export default function Coins() {
     }
     const buscador = (data,search) => {
         const FilterCoin = data.filter((coin)=>coin.id.toLowerCase().includes(search.toLowerCase()))
-        if(FilterCoin.length > 0){
+        if(search.length > 1){
             setResults(FilterCoin)
+        }else{
+            setResults(data)
         }
     }
 
@@ -117,7 +119,6 @@ export default function Coins() {
                                     <tbody>
                     
                                     {
-                                        
                                         results.map(result => {
                                             return(
                                             <tr key={result.id} className="text-light">
