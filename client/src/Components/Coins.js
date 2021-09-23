@@ -10,7 +10,6 @@ export default function Coins() {
     const [data, setData] = useState([])
     const [pag, setPage] = useState(1)
     const [results, setResults] = useState([])
-    const [search, setSearch] = useState('')
 
     useEffect(() => {
         const GetCoins = async () => {
@@ -51,9 +50,13 @@ export default function Coins() {
             setMessage(data.messages.message)
         }
     }
+    const onChange = e => {
+        buscador(data,e.target.value)
+    }
     const buscador = (data,search) => {
         const FilterCoin = data.filter((coin)=>coin.id.toLowerCase().includes(search.toLowerCase()))
-        if(search.length > 1){
+        console.log(search);
+        if(search.length > 0){
             setResults(FilterCoin)
         }else{
             setResults(data)
@@ -97,7 +100,7 @@ export default function Coins() {
                                 <h5>Coortesia de CoinGekco</h5>
                             </div>
                             <div className="form-group col-md-12 mx-auto">
-                            <input type="text" className="form-control mb-1" placeholder="Busca una moneda!" id="buscador" onChange={e => {setSearch(e.target.value); buscador(data,search)}}/>                                                   
+                            <input type="text" className="form-control mb-1" placeholder="Busca una moneda!" id="buscador" onChange={onChange}/>                                                   
                             </div>
                         <div>
                             <div>
