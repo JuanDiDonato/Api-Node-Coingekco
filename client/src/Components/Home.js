@@ -35,7 +35,7 @@ export default function Home(props) {
             props.history.push('/coins')
         }, 1500);
         return(
-            <div className="alert alert-success col-md-10 mx-auto p-1">
+            <div className="alerta">
                 <h6>Ingreso correctamente</h6>
             </div>
         )
@@ -45,17 +45,17 @@ export default function Home(props) {
     return (
         <main>
             <header className="fondo">
-                <div className="container col-md-8 mt-5">
-                    <div className="card bg-light text-dark p-3" >
-                        <div className="card-title">
+                <div className="posicion">
+                    <div className="carta" >
+                        <div className="">
                             <h1>Bienvenido</h1>
-                            <h3>Por favor, inicie sesion para continuar</h3>
+                            <h4>Por favor, inicie sesion para continuar</h4>
                             {log === true ? alerta() : null}
                         </div>
-                            <div className="form-group p-3 ">
-                                    <input type="text" placeholder="username" id="username" className="form-control mb-1"/>
-                                    <input type="password" placeholder="password" id="password" className="form-control mb-1"/>
-                                    <button type="submit" onClick={login} className="btn btn-primary btn-block">Iniciar sesion</button>
+                            <div className=" ">
+                                    <input type="text" placeholder="username" id="username" className=""/>
+                                    <input type="password" placeholder="password" id="password" className=""/>
+                                    <button type="submit" onClick={login} className="">Iniciar sesion</button>
                             </div>
                         <div>
                             <h4>¿No tenes una cuenta?, registrate <Link to='/register'>aca</Link>!</h4>

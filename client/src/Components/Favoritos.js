@@ -134,16 +134,17 @@ export default function Favoritos() {
         return (
             <main>
                 <header className="fondo-coins">
-                    <div className="container col-md-10">
+                    <div className="col-md-10 mx-auto">
                         <div className="mt-5">
                             <h3>Aca se muestran las monedas que agregaste a favoritos</h3>
                         </div>
-                        <div className="mx-auto col-md-7 mt-4 p-3 m-3 bg-light text-light card">{VerticalBar()}</div>
+                        <div className="mx-auto col-md-7 mt-4 p-3 m-3  card">{VerticalBar()}</div>
                         <div className="p-3">
                             <input type="radio" className="m-1" name="orden" id="orden" onClick={() => coinsOrden(false)} />Descendente
                         </div>
                         <div>{log ? alerta() : null}</div>
                         <div className="col-md-12">
+                            <div>
                             <table className="table">
                                 <thead className="thead-light">
                                     <tr>
@@ -180,6 +181,7 @@ export default function Favoritos() {
                                     }
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </header>

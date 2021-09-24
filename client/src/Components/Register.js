@@ -1,8 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 export default function Register(props) {
+
+    const [log, setLog] = useState(false)
+    const [message, setMessage] = useState()
+    const [errores, setErrores] = useState()
 
     const register = async e => {
 
@@ -15,30 +19,57 @@ export default function Register(props) {
 
         const {data} = await axios.post('/register', {name,surname,username,password,coin}, {validateStatus:false})
         if(data.messages.error === true){
-            alert(data.messages.message)
+            setMessage(data.messages.message)
+            setLog(true)
+            setErrores(true)
         }else{
-            alert(data.messages.message);
-            props.history.push('/')
+            setMessage(data.messages.message)
+            setLog(true)
+            setErrores(false)
         }
     }
 
+    const alerta = () =>{
+        if(errores === false){
+            setTimeout(() => {
+                setLog(false)
+                props.history.push('/')
+            }, 1500);
+            return(    
+                <div className="alerta-t">
+                    <h6>{message}</h6>
+                </div> 
+            )
+        }else{
+            return(
+                    <div className="alerta-f">
+                        <h6>{message}</h6>
+                    </div> 
+            )
+        }
+
+
+    }
 
 
     return (
         <main>
             <header className="fondo">
-                <div className="container col-md-8 mt-5">
-                    <div className="card bg-light text-dark p-3">
-                        <div className="card-title">
+                <div className="posicion">
+                    <div className="carta">
+                        <div className="">
                             <h1>Registrate, es gratis!</h1>
                         </div>
+                        <div>
+                            {log ? alerta() : null}
+                        </div>
                         <div className="form-group p-3" >
-                                <input type="text" placeholder="name" id="name" className="form-control mb-1"/>
-                                <input type="text" placeholder="surname" id="surname" className="form-control mb-1"/>
-                                <input type="text" placeholder="username" id="username" className="form-control mb-1"/>
-                                <input type="password" placeholder="password" id="password" className="form-control mb-1"/>
-                                <input type="text" placeholder="coin preference (ej: usd, eur, ars)" className="form-control mb-1" id="coin"/>
-                                <button type="submit" onClick={register} className="btn btn-primary btn-block">Registrarse</button>
+                                <input type="text" placeholder="name" id="name" className=""/>
+                                <input type="text" placeholder="surname" id="surname" className=""/>
+                                <input type="text" placeholder="username" id="username" className=""/>
+                                <input type="password" placeholder="password" id="password" className=""/>
+                                <input type="text" placeholder="coin preference (ej: usd, eur, ars)" className="" id="coin"/>
+                                <button type="submit" onClick={register} className="">Registrarse</button>
                         </div>
                         <div>
                             <h4>¿Ya tenes una cuenta?, inicia sesion <Link to='/'>aca</Link>!</h4>

@@ -67,7 +67,7 @@ export default function Coins() {
         return(
             <main>
                 <header className="fondo-NOcoins">
-                    <div className="mt-5 container col-md-10 mx-auto">
+                    <div className="mt-5 col-md-10 mx-auto">
                         <div className="mb-4">
                             <h1>Criptomonedas disponibles</h1>
                             <img src={coingecko} alt="coingecko" />
@@ -93,24 +93,24 @@ export default function Coins() {
     return (
         <main>
             <header className="fondo-coins">
-                <div className="container col-md-11 mx-auto mt-5">
+                <div className="mx-auto col-md-10 mt-5">
                             <div className="mb-4">
                                 <h1>Criptomonedas disponibles</h1>
                                 <img src={coingecko} alt="coingecko" className="p-1" />
                                 <h5>Coortesia de CoinGekco</h5>
                             </div>
                             <div className="form-group col-md-12 mx-auto">
-                            <input type="text" className="form-control mb-1" placeholder="Busca una moneda!" id="buscador" onChange={onChange}/>                                                   
+                                <input type="text" className="form-control mb-1" placeholder="Busca una moneda!" id="buscador" onChange={onChange}/>                                                   
                             </div>
-                        <div>
+                        <div className=''>
                             <div>
                                 <button  className="btn btn-info m-1" type="submit" id="next" onClick={backpage}><i className="fa fa-chevron-left "></i></button>
                                 <button disabled="disabled" className="btn btn-outline-info m-1" >{pag}</button>
                                 <button className="btn btn-info m-1" type="submit" id="next" onClick={nextpage}><i className="fa fa-chevron-right"></i></button>
                             </div>
                             <div>{log ? alerta() : null}</div>
-                            <div className="mt-3 col-md-12 mx-auto">
-                                <table className="table text-center">
+                            <div className="mt-3">
+                                <table className="table">
                                     <thead className="thead-light ">
                                         <tr>
                                             <th scope="col">Criptomoneda</th>
