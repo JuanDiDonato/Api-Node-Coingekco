@@ -1,0 +1,120 @@
+/*Iniciar Sesion*/
+
+/*Navegacion*/
+.nav-home{
+    width: 100%;
+    box-shadow: grey 0px 2px 7px;
+    border-bottom: 1px solid grey;
+    padding: 0.1px;
+    }
+.nav-home h3{
+    text-decoration: none;
+    font-style: italic;
+    color: rgba(16, 149, 226, 0.9)
+}
+.nav-coins{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    box-shadow: grey 0px 2px 7px;
+    border-bottom: 1px solid grey;
+}
+.nav-coins a{
+    text-decoration: none;
+}
+/*Botones*/
+.button-login{
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: rgba(128, 128, 128, 0.3);
+    padding: 2%;
+    margin-top: 2%;
+    width: 95%;
+}
+.button-login:hover{
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-name: button-login;
+}
+.button-login:active{
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-name: button-login;
+    border: none !important;
+}
+.button-page{
+    border: 1px solid rgba(16, 149, 226, 0.9);
+    border-radius: 10px;
+    padding: 2%;
+    margin: 1%;
+}
+.button-cont{
+    color: white;
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(16, 149, 226, 0.9);
+    padding: 2%;
+    margin: 1%;
+}
+/*Inputs*/
+.input-home{
+    display:grid;
+    grid-template-columns: 100%;
+    text-decoration: none;
+    margin: auto;
+    margin-top: 1%;
+    padding: 2%;
+    border: none;
+    border-bottom: 1px solid black;
+    width: 90%;
+}
+.input-home::placeholder{
+    text-decoration: none;
+    border: none;
+    font-style: italic;
+}
+.input-coins{
+    display:grid;
+    grid-template-columns: 100%;
+    text-decoration: none;
+    margin: auto;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    padding: 2%;
+    border: none;
+    border-bottom: 1px solid rgba(16, 149, 226, 0.9);
+    width: 80%;
+}
+.input-coins::placeholder{
+    text-align: center;
+}
+/*Tabla*/
+.tabla-header{
+    display:grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    background-color: rgba(16, 149, 226, 0.9);
+    margin-top: 5%;
+    padding: 3%;
+    color: white;
+    width: 93vw ;
+    /*font-weight: 10%;*/
+}
+.tabla-coins{
+    display:grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    padding: 2%;
+    width: 95vw ;
+}
+.tabla-fav{
+    display:grid;
+    grid-template-columns: 20% 20% 20% 20% 10% 10%;
+    background-color: rgba(16, 149, 226, 0.9);
+    margin-top: 5%;
+    padding: 3%;
+    color: white;
+    width: 93vw ;
+    /*font-weight: 10%;*/
+}

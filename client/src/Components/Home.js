@@ -44,18 +44,17 @@ export default function Home(props) {
 
     return (
         <main>
-            <header className="fondo">
-                <div className="posicion">
-                    <div className="carta" >
+            <header>
+                <div >
+                    <div className="durlock" >
                         <div className="">
-                            <h1>Bienvenido</h1>
                             <h4>Por favor, inicie sesion para continuar</h4>
                             {log === true ? alerta() : null}
                         </div>
-                            <div className=" ">
-                                    <input type="text" placeholder="username" id="username" className=""/>
-                                    <input type="password" placeholder="password" id="password" className=""/>
-                                    <button type="submit" onClick={login} className="">Iniciar sesion</button>
+                            <div>
+                                    <input type="text" placeholder="username" id="username" className="input-home"/>
+                                    <input type="password" placeholder="password" id="password" className="input-home"/>
+                                    <button type="submit" onClick={login} className="button-login">Iniciar sesion</button>
                             </div>
                         <div>
                             <h4>¿No tenes una cuenta?, registrate <Link to='/register'>aca</Link>!</h4>

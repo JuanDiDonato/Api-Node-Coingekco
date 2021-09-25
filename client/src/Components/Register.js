@@ -56,7 +56,7 @@ export default function Register(props) {
         <main>
             <header className="fondo">
                 <div className="posicion">
-                    <div className="carta">
+                    <div className="durlock">
                         <div className="">
                             <h1>Registrate, es gratis!</h1>
                         </div>
@@ -64,12 +64,12 @@ export default function Register(props) {
                             {log ? alerta() : null}
                         </div>
                         <div className="form-group p-3" >
-                                <input type="text" placeholder="name" id="name" className=""/>
-                                <input type="text" placeholder="surname" id="surname" className=""/>
-                                <input type="text" placeholder="username" id="username" className=""/>
-                                <input type="password" placeholder="password" id="password" className=""/>
-                                <input type="text" placeholder="coin preference (ej: usd, eur, ars)" className="" id="coin"/>
-                                <button type="submit" onClick={register} className="">Registrarse</button>
+                                <input type="text" placeholder="name" id="name" className="input-home"/>
+                                <input type="text" placeholder="surname" id="surname" className="input-home"/>
+                                <input type="text" placeholder="username" id="username" className="input-home"/>
+                                <input type="password" placeholder="password" id="password" className="input-home"/>
+                                <input type="text" placeholder="coin preference (ej: usd, eur, ars)" className="input-home" id="coin"/>
+                                <button type="submit" onClick={register} className="button-login">Registrarse</button>
                         </div>
                         <div>
                             <h4>¿Ya tenes una cuenta?, inicia sesion <Link to='/'>aca</Link>!</h4>

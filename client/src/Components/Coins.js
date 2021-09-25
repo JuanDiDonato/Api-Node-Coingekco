@@ -67,17 +67,17 @@ export default function Coins() {
         return(
             <main>
                 <header className="fondo-NOcoins">
-                    <div className="mt-5 col-md-10 mx-auto">
-                        <div className="mb-4">
+                    <div >
+                        <div  className="durlock">
                             <h1>Criptomonedas disponibles</h1>
                             <img src={coingecko} alt="coingecko" />
                             <h5>Coortesia de CoinGekco</h5>            
                         </div>
                         <div>
                             <div >
-                                <button type="submit" id="next" className="btn btn-dark m-1" onClick={nextpage}>Siguiente</button>
-                                <button type="submit" id="next" className="btn btn-primary m-1" onClick={backpage}>Anterior</button>
-                                <button disabled="disabled" className="btn btn-outline-primary m-1">{pag}</button>
+                            <button  className="button-page" type="submit" id="next" onClick={backpage}><i className="fa fa-chevron-left "></i></button>
+                                <button disabled="disabled" className="button-cont" >-</button>
+                                <button className="button-page" type="submit" id="next" onClick={nextpage}><i className="fa fa-chevron-right"></i></button>
                             </div>
                             <div>
                                 <h3>Obteniendo monedas...</h3>
@@ -92,27 +92,27 @@ export default function Coins() {
     }
     return (
         <main>
-            <header className="fondo-coins">
-                <div className="mx-auto col-md-10 mt-5">
-                            <div className="mb-4">
+            <header>
+                    <div >
+                            <div className="durlock">
                                 <h1>Criptomonedas disponibles</h1>
                                 <img src={coingecko} alt="coingecko" className="p-1" />
                                 <h5>Coortesia de CoinGekco</h5>
                             </div>
-                            <div className="form-group col-md-12 mx-auto">
-                                <input type="text" className="form-control mb-1" placeholder="Busca una moneda!" id="buscador" onChange={onChange}/>                                                   
+                            <div >
+                                <input type="text" className="input-coins" placeholder="Busca una moneda!" id="buscador" onChange={onChange}/>                                                   
                             </div>
-                        <div className=''>
+                        <div>
                             <div>
-                                <button  className="btn btn-info m-1" type="submit" id="next" onClick={backpage}><i className="fa fa-chevron-left "></i></button>
-                                <button disabled="disabled" className="btn btn-outline-info m-1" >{pag}</button>
-                                <button className="btn btn-info m-1" type="submit" id="next" onClick={nextpage}><i className="fa fa-chevron-right"></i></button>
+                                <button  className="button-page" type="submit" id="next" onClick={backpage}><i className="fa fa-chevron-left "></i></button>
+                                <button disabled="disabled" className="button-cont" >{pag}</button>
+                                <button className="button-page" type="submit" id="next" onClick={nextpage}><i className="fa fa-chevron-right"></i></button>
                             </div>
                             <div>{log ? alerta() : null}</div>
                             <div className="mt-3">
-                                <table className="table">
-                                    <thead className="thead-light ">
-                                        <tr>
+                                <table>
+                                    <thead >
+                                        <tr className="tabla-header">
                                             <th scope="col">Criptomoneda</th>
                                             <th scope="col"><i className="fa fa-money mr-1"></i>Precio</th>
                                             <th scope="col"><i className="fa fa-clock-o mr-1"></i>Ultima actualizacion</th>
@@ -124,7 +124,7 @@ export default function Coins() {
                                     {
                                         results.map(result => {
                                             return(
-                                            <tr key={result.id} className="text-light">
+                                            <tr key={result.id} className="tabla-coins">
                                                 <th scope="row" id={result.id} style={{cursor:'pointer'}} onClick={() => favoritos(result.id)}><i className="fa fa-plus mr-1"></i>{result.id}</th>
                                                 <th scope="row">{'$'+result.current_price}</th>
                                                 <th scope="row" >{moment(result.last_updated).fromNow()}</th>

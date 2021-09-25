@@ -23,6 +23,7 @@ export default function Favoritos() {
             const { data } = await axios.get('/favcoins', { validateStatus: false })
             if (data.messages.error === false) {
                 setMycoins(data.messages.coins)
+                console.log(data);
             }  
         }
         // const User = async () => {
@@ -134,8 +135,8 @@ export default function Favoritos() {
         return (
             <main>
                 <header className="fondo-coins">
-                    <div className="col-md-10 mx-auto">
-                        <div className="mt-5">
+                    <div >
+                        <div >
                             <h3>Aca se muestran las monedas que agregaste a favoritos</h3>
                         </div>
                         <div className="mx-auto col-md-7 mt-4 p-3 m-3  card">{VerticalBar()}</div>
@@ -143,44 +144,33 @@ export default function Favoritos() {
                             <input type="radio" className="m-1" name="orden" id="orden" onClick={() => coinsOrden(false)} />Descendente
                         </div>
                         <div>{log ? alerta() : null}</div>
-                        <div className="col-md-12">
-                            <div>
-                            <table className="table">
-                                <thead className="thead-light">
-                                    <tr>
-                                        <th scope="col">Criptomoneda</th>
-                                        <th scope="col">Simbolo</th>
-                                        <th scope="col"><i className="fa fa-usd mr-1"></i>USD</th>
-                                        <th scope="col"><i className="fa fa-eur mr-1"></i>EUR</th>
-                                        <th scope="col">{'Precio '+ user.coin}</th>
-                                        <th scope="col"><i className="fa fa-clock-o mr-1"></i>Variacion 24hs</th> 
-                                        <th scope="col"><i className="fa fa-clock-o mr-1"></i>Ultima actualizacion</th>
-                                        <th scope="col">Logo</th>
-                                        <th scope="col"><i className="fa fa-minus-circle mr-1"></i>Borrar</th>
-                                        <th scope="col"><i className="fa fa-info-circle mr-1"></i>Info</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        mycoins.map(coin => {
-                                            return (
-                                                <tr key={coin.id} className="text-light">
-                                                    <th scope="row" >{coin.id}</th>
-                                                    <th scope="row">{coin.symbol}</th>
-                                                    <th scope="row">{coin.priceUSD}</th>
-                                                    <th scope="row">{coin.priceEUR}</th>
-                                                    <th scope="row">{coin.priceUSER}</th>
-                                                    {coin.priceCHANGE >= 0 ? <th scope="row" style={{color: 'green'}}>{coin.priceCHANGE}</th> : <th scope="row" style={{color: 'red'}}>{coin.priceCHANGE}</th> }
-                                                    <th scope="row">{moment(coin.last_updated).fromNow()}</th>
-                                                    <th scope="row"><div><img src={coin.image} alt={coin.id} /></div></th>
-                                                    <th scope="row"><div style={{cursor:'pointer'}} onClick={() => deleteCoin(coin)}><i className="fa fa-trash-o m-1" style={{cursor:'pointer'}}></i></div></th>
-                                                    <th scope="row"><div style={{cursor:'pointer'}}><Link to={'/mycoin/'+coin.id}><i className="fa fa-plus m-1"></i></Link></div></th>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </tbody>
-                            </table>
+                        <div className="grilla">
+                            <div >
+                                {
+                                    
+                                    mycoins.map(coin=>{
+                                        return(
+                                            <div key={coin.id} className="tarjeta">
+                                                <img src={coin.image} alt={coin.id} />
+                                                <h2>{coin.id.charAt(0).toUpperCase() + coin.id.slice(1)}</h2>
+                                                
+                                                    <div>Precio USD: {coin.priceUSD}</div>
+                                                    
+                                                    <div>Precio EUR: {coin.priceEUR}</div>
+                                                    <div>Precio en {user.coin}: {coin.priceUSER}</div>
+                                                    {coin.priceCHANGE >= 0 ? <div style={{color: 'green'}}>Variacion 24hs: {coin.priceCHANGE}</div> : <div style={{color: 'red'}}>Variacion 24hs: {coin.priceCHANGE}</div> }
+                                                    <div>Actualizada: {moment(coin.last_updated).fromNow()}</div>
+                                                
+                                                <div className="tarjeta-actions">
+                                                <div style={{cursor:'pointer'}} onClick={() => deleteCoin(coin)}><i className="fa fa-trash-o " style={{cursor:'pointer'}}></i></div>
+                                                <div style={{cursor:'pointer'}}><Link to={'/mycoin/'+coin.id}><i className="fa fa-plus "></i></Link></div>
+                                                </div>
+                                                
+                                            </div>
+                                        )
+                                    })
+                                }
+
                             </div>
                         </div>
                     </div>

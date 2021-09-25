@@ -1,0 +1,18 @@
+/*Button-Login*/
+@keyframes button-login {
+    from {
+        color: black;
+        background-color: rgba(128, 128, 128, 0.3);
+        border-bottom: 2px solid black;
+    }
+    to{
+        background-color: rgba(16, 149, 226, 0.9);
+        border-radius: 10px;
+        color: white;
+    }
+    /* to {
+        color: black;
+        background-color: rgba(128, 128, 128, 0.3);
+        border-bottom: 2px solid black;
+    } */
+}

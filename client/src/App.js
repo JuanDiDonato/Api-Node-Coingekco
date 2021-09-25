@@ -1,6 +1,8 @@
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 //Css
 import './assets/css/main.css'
+import './assets/css/elementos.css'
+import './assets/css/animaciones.css'
 //Componentes
 import Home from './Components/Home';
 import Register from './Components/Register'

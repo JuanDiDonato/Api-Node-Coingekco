@@ -14,21 +14,19 @@ export default function Nav(props) {
 
     return(
         <div>
-            <nav>
                 { isAuthenticated ? 
-                    <div className="navegacion">
+                    <div className="nav-coins">
                         <div><Link className="nav-link active" to="/coins">Cryptos</Link></div>
-                        <div><Link className="nav-link active" to="/mycoins">Mis monedas</Link></div>
-                        <div><Link className="nav-link active" to="/" onClick={logout}>Salir</Link></div>
+                        <div><Link className="nav-link active" to="/mycoins">Mis monedas</Link></div>      
                         <div className="user">{user.username}</div>
+                        <div><Link className="nav-link active" to="/" onClick={logout}>Salir</Link></div>
+                        
                     </div>
                 : 
-                <div className="navegacion">
-                    <div><Link className="nav-link active" to="/register">Registrate!</Link></div>
+                <div className="nav-home">
+                    <h3>Bienvenido!</h3>
                 </div> 
                 }
-
-            </nav>
         </div>
     )
 

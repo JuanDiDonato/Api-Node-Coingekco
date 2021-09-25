@@ -77,6 +77,7 @@ CriptoControllers.mycoins = async (req,res) => {
         });
         
         data.id = dataCoin.data.id,
+        data.name = dataCoin.data.name,
         data.symbol = dataCoin.data.symbol,
         data.image = dataCoin.data.image.small,
         data.priceUSD = dataCoin.data.market_data.current_price.usd,
