@@ -8,7 +8,15 @@ body{
     padding:0;
 }
 
+body i{
+    margin: 5px;
+}
+body a{
+    text-decoration: none;
+}
+
 .durlock{
+    background-color: white;
     border: 1px solid black;
     box-shadow: grey 0px 3px 4px;
     border-radius: 2px;
@@ -52,4 +60,34 @@ body{
     margin-top: 4%;
     width: 80%;
     padding: 3%;
+}
+
+.tarjeta-modal{
+    background-color:white;
+    position: absolute;
+    border: 1px solid black;
+    padding: 2%;
+    box-shadow: grey 0px 3px 4px;
+    border-radius: 2px;
+    margin: 2%;
+    margin-top: 8%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    animation-duration: 1s;
+    animation-direction: alternate;
+    animation-name: modalE;
+}
+
+.tbody{
+    display: grid;
+    grid-template-columns: 100%;
+    text-align: center;
+    font-family: 'Yaldevi', sans-serif;
+    margin:0;
+    padding:0;
+    background-color:rgba(128, 128, 128, 0.9);
+}
+.tbody input{
+    background-color:rgba(128, 128, 128, 0);
 }

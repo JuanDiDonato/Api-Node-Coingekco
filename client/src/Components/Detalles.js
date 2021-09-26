@@ -12,6 +12,7 @@ export default function Detalles(props) {
     const [cryptoHis, setCryptoHis] = useState([])
     const [cryptoVol, setCryptoVol] = useState([])
     const [dias, setDias] = useState(1)
+    const [modal, setModal] = useState(false)
 
     useEffect(() => {
         const GetCoin = async () => {
@@ -29,6 +30,32 @@ export default function Detalles(props) {
         //eslint-disable-next-line
     }, [dias]);
 
+    const PonerModal = () => {
+        if(modal === false){
+            setModal(true)
+            const item = document.getElementById('body')
+            item.classList.add('tbody')
+        }else{
+            setModal(false)
+            const item = document.getElementById('body')
+            item.classList.remove('tbody')
+        }
+
+    }
+    const MostrarModal = (data) => {
+        if(modal===true){
+
+            return(
+                <div className="tarjeta-modal animacionE"  >
+                    <p>{data}</p>
+                    <button type="button" className="button-login" onClick={PonerModal}>
+                        Cerrar descripcion
+                    </button>
+                </div>
+            )
+        }
+    }
+
     let coins = cryptoHis.map(crypt => crypt);
     let dataLength = cryptoHis.map(crypt => moment(crypt[0]).fromNow());
     let volume = cryptoVol.map(vol => vol);
@@ -42,7 +69,11 @@ export default function Detalles(props) {
         const ContarDias = (dias) => {
             if(dias === '' || dias === null){
                 setDias(1)
-            }else{
+            }
+            if(dias < 1){
+                setDias(1)
+            }
+            else{
                 setDias(dias)
             }
             
@@ -91,33 +122,32 @@ export default function Detalles(props) {
         
 
         return (
-            <div>
+            <div className="grilla-detalles" id='body'>
                 <div className="tarjeta-detalles">
-                    <div className="mt-3 img-fluid ">
+                    <div>
                         <img src={crypto.image.small} alt=''></img>
                         <h1>{crypto.name}</h1>
                     </div> 
-                    <div className="mt-3">
+                    <div>
                         <h2>Datos generales</h2>
-                            <div className="list-group-item">{'Simbolo: '+ crypto.symbol}</div>
-                            <div className="list-group-item">{'Ranking Coingecko: '+ crypto.coingecko_rank}</div>
-                            <div className="list-group-item">{'Ranking de Mercado : '+ crypto.market_cap_rank}</div>
-                            {crypto.genesis_date? <div className="list-group-item">{'Creacion: '+ crypto.genesis_date}</div > : null}
-                            <div className="list-group-item">{'Precio Usd: $'+ crypto.market_data.current_price.usd}</div>
+                            <div >{'Simbolo: '+ crypto.symbol}</div>
+                            <div >{'Ranking Coingecko: '+ crypto.coingecko_rank}</div>
+                            <div >{'Ranking de Mercado : '+ crypto.market_cap_rank}</div>
+                            {crypto.genesis_date? <div>{'Creacion: '+ crypto.genesis_date}</div > : null}
+                            <div >{'Precio Usd: $'+ crypto.market_data.current_price.usd}</div>
                     </div> 
                     <div className="mt-3">
                         <h3>Variaciones de precio</h3>
-                        
-                            <div className="list-group-item">Cambio en 1 horas: {crypto.market_data.price_change_percentage_1h_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_1h_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_1h_in_currency.usd}</p>}</div>
-                            <div className="list-group-item">Cambio en 24 horas: {crypto.market_data.price_change_percentage_24h_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_24h_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_24h_in_currency.usd}</p>}</div>
-                            <div className="list-group-item">Cambio en 7 dias: {crypto.market_data.price_change_percentage_7d_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_7d_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_7d_in_currency.usd}</p>}</div>
-                            <div className="list-group-item">Cambio en 30 dias: {crypto.market_data.price_change_percentage_30d_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_30d_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_30d_in_currency.usd}</p>}</div>
-                            <div className="list-group-item">Cambio en 200 dias: {crypto.market_data.price_change_percentage_200d_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_200d_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_200d_in_currency.usd}</p>}</div>
-                            <div className="list-group-item">Cambio en 1 año: {crypto.market_data.price_change_percentage_1y_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_1y_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_1y_in_currency.usd}</p>}</div>
+                            <div>Cambio en 1 horas: {crypto.market_data.price_change_percentage_1h_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_1h_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_1h_in_currency.usd}</p>}</div>
+                            <div>Cambio en 24 horas: {crypto.market_data.price_change_percentage_24h_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_24h_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_24h_in_currency.usd}</p>}</div>
+                            <div>Cambio en 7 dias: {crypto.market_data.price_change_percentage_7d_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_7d_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_7d_in_currency.usd}</p>}</div>
+                            <div>Cambio en 30 dias: {crypto.market_data.price_change_percentage_30d_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_30d_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_30d_in_currency.usd}</p>}</div>
+                            <div>Cambio en 200 dias: {crypto.market_data.price_change_percentage_200d_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_200d_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_200d_in_currency.usd}</p>}</div>
+                            <div >Cambio en 1 año: {crypto.market_data.price_change_percentage_1y_in_currency.usd >= 0 ?<p style={{color:'green',display: 'inline'}}>{crypto.market_data.price_change_percentage_1y_in_currency.usd}</p>:<p style={{color:'red', display: 'inline'}}>{crypto.market_data.price_change_percentage_1y_in_currency.usd}</p>}</div>
                         
                     </div>
                     <div>
-                        <h3><i className="fa fa-link m-1"></i>Enlaces</h3>
+                        <h3><i className="fa fa-link "></i>Enlaces</h3>
                             {links.blockchain_site.map(link=> {
                                 let NewString = link.substring(25, link)
                                 return(
@@ -128,51 +158,34 @@ export default function Detalles(props) {
                             })}
                        
                     </div>
+                    <div>
+                    {crypto.description.en ? 
+                    <div>
+                        <h3>Datos adicionales</h3>
+                            
+                            <div >
+                                <button type="button" className="button-login" onClick={PonerModal}>
+                                 {modal ? 'Cerrar descripcion' : 'Ver Descripcion'}
+                                </button>
+                                
+                                    {MostrarModal(crypto.description.en)}
+                                
+                            </div>
+                    </div> : null } 
+                    </div>
                 </div>
 
                 <div className="tarjeta-detalles">
 
                     <div>
                         <h3>Dias</h3>
-                        <input type="number" placeholder="dias"  className="input-coins" id="dias" onChange={e => ContarDias(e.target.value) }/>
+                        <input type="number" placeholder='Nº de dias' className="input-detalles" id="dias" onChange={e => ContarDias(e.target.value) }/>
                     </div>
-                    <div className="mx-auto mt-5 p-2 col-md-12">
-                        <div className="img-fluid">{LineChart()}</div>
-                        <div className="img-fluid">{LineChartVol()}</div>
-                    </div>
-                    {crypto.description.en ? 
                     <div>
-                        <h3>Datos adicionales</h3>
-                            <div >
-                                {/*Boton Descripcion*/}
-                                <button type="button" data-toggle="modal" data-target="#desc" className="button-login">
-                                 Ver descripcion
-                                </button>
-
-                                {/*Descripcion*/}
-                                <div className="modal fade" id="desc" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div className="modal-dialog modal-xl ">
-                                        <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title" id="exampleModalLabel">{crypto.name}</h5>
-                                            
-                                           
-                                        </div>
-                                        <div className="modal-body">
-                                            <h6 className="container">{crypto.description.en}</h6>
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button type="button" className="button-login" data-dismiss="modal">Cerrar</button>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                
-                               
-                                
-                            </div>
-                    </div> : null } 
+                        <div>{LineChart()}</div>
+                        <div>{LineChartVol()}</div>
+                    </div>
+ 
                 </div>
             </div>
         )

@@ -34,7 +34,6 @@ NewUserControllers.register = async (req,res) => {
 NewUserControllers.login = async(req, res) => {
     if(req.isAuthenticated()){
         const {username, id_user,coin} = req.user
-        console.log(username);
         token = NewUserControllers.newToken(id_user,coin)
         res.cookie('access_token', token, {httpOnly : true, sameSite : true})
         res.json({'messages': {isAuthenticated:true, user:{username, coin} ,'message': 'Inicio sesion como '+username, 'error': false}})
@@ -57,7 +56,6 @@ NewUserControllers.dataUser = (req,res)=> {
 
 NewUserControllers.isAuthenticated = (req,res) => {
     const {name, surname, username, password, coin} = req.user[0]
-    console.log(req.user)
     res.json({isAuthenticated : true, user : {name, surname, username, password, coin}})
 }
 

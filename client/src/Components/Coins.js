@@ -109,7 +109,7 @@ export default function Coins() {
                                 <button className="button-page" type="submit" id="next" onClick={nextpage}><i className="fa fa-chevron-right"></i></button>
                             </div>
                             <div>{log ? alerta() : null}</div>
-                            <div className="mt-3">
+                            <div>
                                 <table>
                                     <thead >
                                         <tr className="tabla-header">

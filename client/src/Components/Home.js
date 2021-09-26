@@ -17,13 +17,13 @@ export default function Home(props) {
             alert('Por favor complete todos los campos')
         }else{
             const {data} = await axios.post('/login', {username,password}, {validateStatus:false})
+            setUser(data.messages.user)
             if(data === 'Unauthorized'){
                 alert('Datos erroneos')
             }else{
                 if(data.messages.error === false){
-                    setLog(true)   
                     setIsAuthenticated(data.messages.isAuthenticated)
-                    setUser(data.messages.user)
+                    setLog(true)   
                 }
             }
         }
@@ -44,8 +44,8 @@ export default function Home(props) {
 
     return (
         <main>
-            <header>
-                <div >
+            <header >
+                <div className=" fondo" >
                     <div className="durlock" >
                         <div className="">
                             <h4>Por favor, inicie sesion para continuar</h4>

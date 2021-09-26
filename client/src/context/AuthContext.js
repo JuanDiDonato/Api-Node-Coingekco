@@ -11,7 +11,6 @@ export default ({children}) => {
     useEffect(() => {
         const verify = async () =>{
             const {data} = await axios.get('/authenticate', {validateStatus: false})
-            console.log(data);
             setUser(data.user)
             setIsAuthenticated(data.isAuthenticated);
             setIsLoaded(true);

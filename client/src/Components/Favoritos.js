@@ -16,7 +16,6 @@ export default function Favoritos() {
     const [message, setMessage] = useState()
     const [rev, setRev] = useState(false)
     const [mycoins, setMycoins] = useState([])
-    //const [usercoin, setUsercoin] = useState()
 
     useEffect(() => {
         const MyCoins = async () => {
@@ -26,15 +25,9 @@ export default function Favoritos() {
                 console.log(data);
             }  
         }
-        // const User = async () => {
-        //     const {data} = await axios.get('/data', {validateStatus:false})
-        //     setUsercoin(data.coin)
-        // }
         MyCoins()
-        //User()
         //eslint-disable-next-line
     }, [])
-
     const alerta = () =>{
         setTimeout(() => {
             setLog(false)
@@ -45,8 +38,6 @@ export default function Favoritos() {
             </div>
         )
     }
-
-
     const coinsOrden = (value) => {
         if(rev === false){
             setRev(true)
@@ -78,6 +69,18 @@ export default function Favoritos() {
             
         }
     }
+
+    const spin = (id) => {
+        const item = document.getElementById(id)
+        item.classList.add('fa-spin')
+
+    }
+    const NoSpin = (id) => {
+        const item = document.getElementById(id)
+        item.classList.remove('fa-spin')
+
+    }
+
 
     let CoinNames = mycoins.map(names => names.id)
     let CoinValue = mycoins.map(names => names.priceUSER)
@@ -139,39 +142,44 @@ export default function Favoritos() {
                         <div >
                             <h3>Aca se muestran las monedas que agregaste a favoritos</h3>
                         </div>
-                        <div className="mx-auto col-md-7 mt-4 p-3 m-3  card">{VerticalBar()}</div>
+                        <div className="grafico">{VerticalBar()}</div>
                         <div className="p-3">
                             <input type="radio" className="m-1" name="orden" id="orden" onClick={() => coinsOrden(false)} />Descendente
                         </div>
                         <div>{log ? alerta() : null}</div>
                         <div className="grilla">
-                            <div >
+                            
                                 {
                                     
+                                    
                                     mycoins.map(coin=>{
+                            
                                         return(
                                             <div key={coin.id} className="tarjeta">
-                                                <img src={coin.image} alt={coin.id} />
-                                                <h2>{coin.id.charAt(0).toUpperCase() + coin.id.slice(1)}</h2>
-                                                
-                                                    <div>Precio USD: {coin.priceUSD}</div>
-                                                    
-                                                    <div>Precio EUR: {coin.priceEUR}</div>
-                                                    <div>Precio en {user.coin}: {coin.priceUSER}</div>
-                                                    {coin.priceCHANGE >= 0 ? <div style={{color: 'green'}}>Variacion 24hs: {coin.priceCHANGE}</div> : <div style={{color: 'red'}}>Variacion 24hs: {coin.priceCHANGE}</div> }
-                                                    <div>Actualizada: {moment(coin.last_updated).fromNow()}</div>
-                                                
-                                                <div className="tarjeta-actions">
-                                                <div style={{cursor:'pointer'}} onClick={() => deleteCoin(coin)}><i className="fa fa-trash-o " style={{cursor:'pointer'}}></i></div>
-                                                <div style={{cursor:'pointer'}}><Link to={'/mycoin/'+coin.id}><i className="fa fa-plus "></i></Link></div>
+                                                <div>
+                                                    <img src={coin.image} alt={coin.id} />
+                                                    <h2>{coin.id.charAt(0).toUpperCase() + coin.id.slice(1)}</h2>
+                                                        <div>Precio USD: {coin.priceUSD}</div>
+                                                        <div>Precio EUR: {coin.priceEUR}</div>
+                                                        <div>Precio en {user.coin}: {coin.priceUSER}</div>
+                                                        <div>Variacion 24hs: {coin.priceCHANGE >= 0 ? <p style={{color: 'green',display: 'inline' }}>{coin.priceCHANGE}</p> : <p style={{color: 'red',display: 'inline'}}>{coin.priceCHANGE}</p> } </div>
+                                                        
+                                                        <div>Actualizada: {moment(coin.last_updated).fromNow()}</div>
+                                                    <div className="tarjeta-actions">
+                                                        <div style={{cursor:'pointer'}} onClick={() => deleteCoin(coin)}><i  className="fa fa-trash-o " style={{cursor:'pointer'}}></i></div>
+                                                        <div style={{cursor:'pointer'}}><Link to={'/mycoin/'+coin.id} onMouseOver={() =>spin(coin.id)} onMouseOut={() => NoSpin(coin.id)}><i id={coin.id} className="fa fa-plus "></i></Link></div>
+                                                    </div>
                                                 </div>
+                                               
                                                 
                                             </div>
                                         )
                                     })
+
+                                    
                                 }
 
-                            </div>
+                            
                         </div>
                     </div>
                 </header>

@@ -29,7 +29,6 @@ CriptoControllers.coins = async (req, res) =>{
 
 CriptoControllers.addCoins = async (req,res) => {
     const {coinFav} = req.body
-    console.log(req.body);
     const dataUser = req.user[0]
     if(coinFav == null || coinFav == ''){
         res.json({'messages': {'message': 'Moneda no valida', 'error': true}})
@@ -87,11 +86,6 @@ CriptoControllers.mycoins = async (req,res) => {
         data.last_updated = dataCoin.data.market_data.last_updated
         dataCoinUser.push(data)
     }
-    // if(rev == false){
-    //     dataCoinUser.sort(((a, b) => b.priceUSER - a.priceUSER));
-    // }else{
-    //     dataCoinUser.sort(((a, b) => a.priceUSER - b.priceUSER ));
-    // }
     res.json({'messages': {'coins': dataCoinUser, 'error': false}})
 }
 
