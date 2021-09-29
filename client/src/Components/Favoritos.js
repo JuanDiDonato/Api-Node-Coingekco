@@ -5,6 +5,7 @@ import axios from 'axios'
 import moment from 'moment'
 import 'moment/locale/es'
 import { AuthContext } from '../context/AuthContext';
+import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 
 
 
@@ -69,7 +70,6 @@ export default function Favoritos() {
             
         }
     }
-
     const spin = (id) => {
         const item = document.getElementById(id)
         item.classList.add('fa-spin')
@@ -80,7 +80,12 @@ export default function Favoritos() {
         item.classList.remove('fa-spin')
 
     }
-
+    const ReOrder = (list, startIndex, endIndex) => {
+        const result = [...list];
+        const [removed] = result.splice(startIndex,1);
+        result.splice(endIndex, 0, removed);
+        return result;
+    }
 
     let CoinNames = mycoins.map(names => names.id)
     let CoinValue = mycoins.map(names => names.priceUSER)
@@ -137,6 +142,17 @@ export default function Favoritos() {
     }else{
         return (
             <main>
+                <DragDropContext onDragEnd={(result) => 
+                    {const {source,destination} = result
+                    if(!destination){
+                        return
+                    }
+                    if(source.index === destination.index && source.droppableId === destination.droppableId)
+                        return
+                    setMycoins(prevCoins => ReOrder(prevCoins, source.index, destination.index))}}>
+                
+                
+                
                 <header className="fondo-coins">
                     <div >
                         <div >
@@ -147,15 +163,25 @@ export default function Favoritos() {
                             <input type="radio" className="m-1" name="orden" id="orden" onClick={() => coinsOrden(false)} />Descendente
                         </div>
                         <div>{log ? alerta() : null}</div>
-                        <div className="grilla">
-                            
-                                {
-                                    
-                                    
-                                    mycoins.map(coin=>{
-                            
+                    
+                        
+
+                        <Droppable droppableId="coins">
+                            {(DroppableProvided) => (
+                            <div 
+                            {...DroppableProvided.droppableProps}
+                            ref={DroppableProvided.innerRef} 
+                            className="grilla"
+                            >
+                            {
+                                    mycoins.map((coin, index)=>{
                                         return(
-                                            <div key={coin.id} className="tarjeta">
+                                            <Draggable key={coin.id} draggableId={coin.id} index={index}>
+                                            {(DraggableProvided) => (
+                                                <div {...DraggableProvided.draggableProps} 
+                                                ref={DraggableProvided.innerRef} 
+                                                {...DraggableProvided.dragHandleProps}
+                                                className="tarjeta">
                                                 <div>
                                                     <img src={coin.image} alt={coin.id} />
                                                     <h2>{coin.id.charAt(0).toUpperCase() + coin.id.slice(1)}</h2>
@@ -170,19 +196,20 @@ export default function Favoritos() {
                                                         <div style={{cursor:'pointer'}}><Link to={'/mycoin/'+coin.id} onMouseOver={() =>spin(coin.id)} onMouseOut={() => NoSpin(coin.id)}><i id={coin.id} className="fa fa-plus "></i></Link></div>
                                                     </div>
                                                 </div>
-                                               
-                                                
-                                            </div>
+                                            </div> )
+                                            }
+                                            </Draggable>
                                         )
                                     })
-
-                                    
                                 }
-
-                            
-                        </div>
+                                {DroppableProvided.placeholder}
+                            </div> 
+                            )}
+                        </Droppable>
+                        
                     </div>
                 </header>
+                </DragDropContext>
             </main>
            
         )
