@@ -51,7 +51,7 @@ export default function Favoritos() {
         }
     }
     const deleteCoin = async (coin) => {
-        const res = await axios.post('/delete', {'coin' : coin.id}, {validateStatus:false})
+        const res = await axios.post('/delete', {'coin' : coin}, {validateStatus:false})
         if(res.data.messages.error === true){
             setLog(true)
             setMessage(res.data.messages.message)
@@ -143,12 +143,18 @@ export default function Favoritos() {
         return (
             <main>
                 <DragDropContext onDragEnd={(result) => 
-                    {const {source,destination} = result
+                    
+                    {
+                    console.log(result)
+                    const {source,destination,draggableId} = result
                     if(!destination){
                         return
                     }
                     if(source.index === destination.index && source.droppableId === destination.droppableId)
                         return
+                    if(destination.droppableId === 'coins-delete'){
+                        deleteCoin(draggableId)
+                    }
                     setMycoins(prevCoins => ReOrder(prevCoins, source.index, destination.index))}}>
                 
                 
@@ -162,9 +168,18 @@ export default function Favoritos() {
                         <div className="p-3">
                             <input type="radio" className="m-1" name="orden" id="orden" onClick={() => coinsOrden(false)} />Descendente
                         </div>
+
+                        <Droppable droppableId="coins-delete">
+                            {(DroppableProvided) => (
+                                <div className="delete-drop" {...DroppableProvided.droppableProps} ref={DroppableProvided.innerRef}>
+                                    <h4>Drop here to delete a coin!</h4>
+                                    {DroppableProvided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+
                         <div>{log ? alerta() : null}</div>
                     
-                        
 
                         <Droppable droppableId="coins">
                             {(DroppableProvided) => (
@@ -192,7 +207,6 @@ export default function Favoritos() {
                                                         
                                                         <div>Actualizada: {moment(coin.last_updated).fromNow()}</div>
                                                     <div className="tarjeta-actions">
-                                                        <div style={{cursor:'pointer'}} onClick={() => deleteCoin(coin)}><i  className="fa fa-trash-o " style={{cursor:'pointer'}}></i></div>
                                                         <div style={{cursor:'pointer'}}><Link to={'/mycoin/'+coin.id} onMouseOver={() =>spin(coin.id)} onMouseOut={() => NoSpin(coin.id)}><i id={coin.id} className="fa fa-plus "></i></Link></div>
                                                     </div>
                                                 </div>

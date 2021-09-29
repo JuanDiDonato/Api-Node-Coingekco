@@ -105,6 +105,15 @@
     width: 80%;
 }
 
+/*Drops*/
+.delete-drop{
+    border: 1px solid red;
+    background-color: rgba(255, 0, 0, 0.3);
+    border-radius: 5px;
+    margin: 2%;
+    padding: 2%;
+}
+
 /*Tabla*/
 .tabla-header{
     display:grid;

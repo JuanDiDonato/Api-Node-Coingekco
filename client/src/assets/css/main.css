@@ -46,10 +46,11 @@ body a{
 }
 .tarjeta-actions{
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 100%;
     width: 80%;
     margin: auto;
     margin-top: 2%;
+    margin-bottom: 10%;
 }
 
 .tarjeta-detalles{
